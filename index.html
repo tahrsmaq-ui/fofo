@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سحر عيونها... ✨</title>
+    <title>إلى عينيها... ✨</title>
     <style>
         * {
             box-sizing: border-box;
@@ -29,7 +29,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 40px 30px;
+            padding: 45px 35px;
             border-radius: 30px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             max-width: 480px;
@@ -38,7 +38,34 @@
             animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* حاوية الصورة مع إضاءة وهج فخمة */
+        /* تنسيق الواجهة الأولى */
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .welcome-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .welcome-desc {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* حاوية الصفحة الثانية (تكون مخفية بالبداية) */
+        .hidden-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
         .image-container {
             position: relative;
             width: 130px;
@@ -84,8 +111,8 @@
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             border: none;
             color: white;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 13px 32px;
+            font-size: 1.05rem;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
@@ -102,6 +129,12 @@
             transform: translateY(1px);
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); transform: scale(1); }
             100% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.7); transform: scale(1.03); }
@@ -112,7 +145,6 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* تأثير النجوم والشرارات عند النقر */
         .sparkle {
             position: absolute;
             pointer-events: none;
@@ -136,21 +168,47 @@
 <body>
 
     <div class="card">
-        <!-- صورة عيونها مع تأثير הوهج -->
-        <div class="image-container">
-            <img src="mylove.jpg" alt="عيونها">
+        <!-- الواجهة الأولى (البداية) -->
+        <div id="welcomeScreen">
+            <div class="icon">💌</div>
+            <h2 class="welcome-title">مرحباً.. في شغلة صغيرة الك عندي</h2>
+            <p class="welcome-desc">حضرتلك هالشغلة البسيطة، وكلي أمل تعجبك..</p>
+            <button class="btn" onclick="revealSurprise()">اضغطي هنا لفتح المفاجأة ✨</button>
         </div>
 
-        <h1>إلى أعمق نظرة... ✨</h1>
-        
-        <div class="quote-box">
-            <p class="quote" id="quoteText">"في عيونِكِ تفاصيلٌ صغيرة.. تختصر كل جمالِ هذا العالم بـ نظرة."</p>
+        <!-- الواجهة الثانية (تظهر بعد الضغط: الصورة والكلام) -->
+        <div id="surpriseScreen" class="hidden-section">
+            <div class="image-container">
+                <img src="mylove.jpg" alt="عيونها">
+            </div>
+
+            <h1>إلى أعمق نظرة... ✨</h1>
+            
+            <div class="quote-box">
+                <p class="quote" id="quoteText">"في عيونِكِ تفاصيلٌ صغيرة.. تختصر كل جمالِ هذا العالم بـ نظرة."</p>
+            </div>
+            
+            <button class="btn" onclick="nextMessage()">تابعي القراءة ✨</button>
         </div>
-        
-        <button class="btn" onclick="nextMessage()">تابعي القراءة ✨</button>
     </div>
 
     <script>
+        // دالة إظهار المفاجأة عند الضغط على الزر الأول
+        function revealSurprise() {
+            const welcome = document.getElementById("welcomeScreen");
+            const surprise = document.getElementById("surpriseScreen");
+
+            welcome.style.opacity = 0;
+            setTimeout(() => {
+                welcome.style.display = "none";
+                surprise.style.display = "block";
+                setTimeout(() => {
+                    surprise.style.opacity = 1;
+                }, 50);
+            }, 400);
+        }
+
+        // عبارات الاعتراف المتنوعة
         const messages = [
             "\"في عيونِكِ تفاصيلٌ صغيرة.. تختصر كل جمالِ هذا العالم بـ نظرة.\"",
             "\"يقال إن العيون لغة لا تحتاج إلى كلمات.. وعيونك حكوا لي كلشي كنت خايف أسأل عنه.\"",
@@ -173,7 +231,7 @@
             }, 300);
         }
 
-        // تفاعل الشرارات السحرية عند الكبس
+        // تأثير الشرارات السحرية عند النقر بالشاشة
         document.addEventListener('click', function(e) {
             for (let i = 0; i < 8; i++) {
                 let sparkle = document.createElement('span');
